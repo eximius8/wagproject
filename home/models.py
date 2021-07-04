@@ -10,7 +10,8 @@ class HomePage(Page):
     subtitle = models.CharField(
         max_length=100,
         blank=True,
-        null=True
+        null=True,
+        verbose_name="Подзаголовок"
     )
 
     # поля для ввода данных в интерефейсе администратора
