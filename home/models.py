@@ -1,9 +1,13 @@
 from django.db import models
 
 from wagtail.core.models import Page
-from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
-from wagtail.core.fields import RichTextField
+from wagtail.core.fields import RichTextField, StreamField
+
+from wagtail.core.blocks import RichTextBlock
+from wagtail.images.blocks import ImageChooserBlock
+from wagtail.embeds.blocks import EmbedBlock
 
 
 class HomePage(Page):
@@ -20,6 +24,13 @@ class HomePage(Page):
         null=True,
     )
 
+    body = StreamField([
+        ('rtfblock', RichTextBlock()),
+        ('imgblock', ImageChooserBlock()),
+        ('youtubeblock', EmbedBlock())
+
+    ],blank=True)
+
     bg_image = models.ForeignKey(
         'wagtailimages.Image',
         blank=True,
@@ -34,6 +45,7 @@ class HomePage(Page):
         FieldPanel('subtitle'),
         FieldPanel('rtfbody'),
         ImageChooserPanel('bg_image'),
+        StreamFieldPanel('body')     
     ]
 
     # promote_panels = []
