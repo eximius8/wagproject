@@ -20,16 +20,29 @@ class HomePage(Page):
         verbose_name="Подзаголовок"
     )
     rtfbody = RichTextField(
+        features=['h1', 'h6', 'hr', 'bold', 'italic'],
         blank=True,
         null=True,
     )
 
     body = StreamField([
-        ('rtfblock', RichTextBlock()),
-        ('imgblock', ImageChooserBlock()),
-        ('youtubeblock', EmbedBlock())
+        ('rtfblock', RichTextBlock(
+            features=['h1', 'h6', 'hr', 'bold', 'italic'],
+            label="Текст", 
+            help_text="Введите описание")),
+        ('imgblock', ImageChooserBlock(
+            template="blocks/imgblock.html"
+        )),
+        ('youtubeblock', EmbedBlock(
+            icon="success"
+        ))
 
-    ],blank=True)
+        ],
+         block_counts={
+                        'rtfblock': {'min_num': 1},
+                        'imgblock': {'max_num': 1},
+                    },
+        blank=True)
 
     bg_image = models.ForeignKey(
         'wagtailimages.Image',
