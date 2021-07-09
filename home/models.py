@@ -9,6 +9,8 @@ from wagtail.core.blocks import RichTextBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.embeds.blocks import EmbedBlock
 
+from .blocks import FigCaptionBlock
+
 
 class HomePage(Page):
     
@@ -26,6 +28,7 @@ class HomePage(Page):
     )
 
     body = StreamField([
+        ('figcaptionblock', FigCaptionBlock()),
         ('rtfblock', RichTextBlock(
             features=['h1', 'h6', 'hr', 'bold', 'italic'],
             label="Текст", 
