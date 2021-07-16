@@ -11,9 +11,17 @@ from wagtail.embeds.blocks import EmbedBlock
 
 from .blocks import FigCaptionBlock
 
+class NewsPage(Page):
+
+    max_count = 3
+
+    pass
 
 class HomePage(Page):
-    
+
+    subpage_types = ['home.NewsPage']
+    parent_page_types = []
+       
     # поля в базе данных
     subtitle = models.CharField(
         max_length=100,
