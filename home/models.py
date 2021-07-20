@@ -13,6 +13,8 @@ from .blocks import FigCaptionBlock
 
 class NewsPage(Page):
 
+    template = 'home/newspage.html'
+
     max_count = 3
 
     pass
