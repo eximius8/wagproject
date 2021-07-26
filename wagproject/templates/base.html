@@ -1,4 +1,4 @@
-{% load static wagtailuserbar %}
+{% load static wagtailuserbar base_tags %}
 
 <!DOCTYPE html>
 <html class="no-js" lang="ru">
@@ -33,6 +33,7 @@
         {% wagtailuserbar %}
 
         {% block content %}{% endblock %}
+        {% footer_tag %}
 
         {# Global javascript #}
         <script type="text/javascript" src="{% static 'js/wagproject.js' %}"></script>
@@ -41,4 +42,5 @@
             {# Override this in templates to add extra javascript #}
         {% endblock %}
     </body>
+    
 </html>
