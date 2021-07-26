@@ -11,13 +11,35 @@ from wagtail.embeds.blocks import EmbedBlock
 
 from .blocks import FigCaptionBlock
 
+from wagtail.snippets.models import register_snippet
+
+
+@register_snippet
+class Footer(models.Model):
+
+    bodytext = RichTextField()
+
+    panels = [
+        FieldPanel('bodytext')
+    ]
+
+    class Meta:
+        verbose_name = "Футер"
+        verbose_name_plural = "Футеры"
+
+    def __str__(self):
+        return "Футер"
+
+
+
+
+
 class NewsPage(Page):
 
     template = 'home/newspage.html'
 
     max_count = 3
 
-    pass
 
 class HomePage(Page):
 
