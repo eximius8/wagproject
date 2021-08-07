@@ -1,9 +1,34 @@
 from django.db import models
-from wagtail.core.models import Page
+from wagtail.core.models import Page, Orderable
 from wagtail.core.fields import RichTextField
 
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
+from wagtail.images.edit_handlers import ImageChooserPanel
 from modelcluster.fields import ParentalKey
+
+
+class EquipmentImage(Orderable):
+    """Изображения оборудования"""
+
+    caption = models.CharField(max_length=200, verbose_name="Текст слайда")
+    figure = models.ForeignKey('wagtailimages.Image',
+        blank=True, 
+        null=True, 
+        on_delete=models.SET_NULL, 
+        related_name='+',
+        verbose_name='Картинка')
+
+    equipment = ParentalKey(
+        'equipment.EquipemntPage',
+        on_delete=models.CASCADE,
+        related_name='slides')
+    
+    panels = [
+        FieldPanel('caption'),
+        ImageChooserPanel('figure'),
+    ]
+
+
 
 
 class EquipmentOperator(models.Model):
@@ -15,8 +40,7 @@ class EquipmentOperator(models.Model):
     equipment = ParentalKey(
         'equipment.EquipemntPage',
         on_delete=models.CASCADE,
-        related_name='operators'
-        )
+        related_name='operators')
 
 
 class EquipemntPage(Page):
@@ -32,9 +56,11 @@ class EquipemntPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel('description'),
         MultiFieldPanel([
+            InlinePanel('slides', label="слайд")],
+            heading="Слайды",),
+        MultiFieldPanel([
             InlinePanel('operators', label="оператора")],
-            heading="Операторы",
-            )
+            heading="Операторы",)
     ]
     
     subpage_types = []
