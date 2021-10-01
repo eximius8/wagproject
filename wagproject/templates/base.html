@@ -32,6 +32,10 @@
     <body class="{% block body_class %}{% endblock %}">
         {% wagtailuserbar %}
 
+        {% get_site_root as site_root %}
+
+        {% top_menu parent=site_root %}
+
         {% block content %}{% endblock %}
         {% footer_tag %}
 
